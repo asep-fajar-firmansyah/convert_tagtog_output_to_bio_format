@@ -38,19 +38,33 @@ def main(filename, schema):
                 else:
                     tag_ = schema[tag]                    
                 
-                if word == "" and tag =="o":
-                    print("OK")
-                    #if prev_word =="." and prev_tag=="o":
-                    #    with open("results.txt", "a",  encoding="utf8") as f:
-                    #        f.write("empty space\n")
-                else:
+                if word != "":
                     print(word, tag_)
                     with open("results.txt", "a",  encoding="utf8") as f:
                         f.write("{}\t{}\n".format(word.strip(), tag_))
                     if word =="." and i==0:
                         with open("results.txt", "a",  encoding="utf8") as f:
-                            f.write("empty space\n")
+                            f.write("\n")
                         empty_space = True
+                    elif word=="." and i>0:
+                        if prev_word.isnumeric()==False:
+                            with open("results.txt", "a",  encoding="utf8") as f:
+                                f.write("\n")
+                            empty_space = True
+                        else:
+                            next_i = i+1
+                            if next_i < len(words):
+                                #print(words)
+                                #print("next_i", next_i)
+                                next_word = words[next_i]
+                            else:
+                                next_word=""
+                                
+                            if next_word !="" and next_word.isnumeric()==False:
+                                with open("results.txt", "a",  encoding="utf8") as f:
+                                    f.write("\n")
+                                empty_space = True
+                    
                     
                 prev_word = word
                 prev_tag = tag
@@ -58,7 +72,7 @@ def main(filename, schema):
             if len(values)==1:
                 if empty_space==False:
                     with open("results.txt", "a",  encoding="utf8") as f:
-                        f.write("empty space\n")
+                        f.write("\n")
             empty_space=False
             
 if __name__ == "__main__":
