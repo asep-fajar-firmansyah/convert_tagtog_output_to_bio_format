@@ -50,7 +50,7 @@ def main(filename, output, schema):
             if tag == "None":
                 tag="O"
             for i, word in enumerate(words):
-                regex = re.compile(r"""["'“@_!#$%,^&*()<>?/\|\-\.}{~:]""")
+                regex = re.compile(r"""["'“’;@_!#$%,^&*()<>?/\|\-\.}{~:]""")
                 search = regex.findall(word) 
                 if len(search)>0:
                     sub_words = word
@@ -70,7 +70,7 @@ def main(filename, output, schema):
                     if sub_word != "":
                         print(sub_word, tag_)
                         with open(output, "a",  encoding="utf8") as f:
-                            f.write("{}\t{}\n".format(word.strip(), tag_))
+                            f.write("{}\t{}\n".format(sub_word.strip(), tag_))
                         if sub_word =="." and i==0:
                             with open(output, "a",  encoding="utf8") as f:
                                 f.write("\n")
